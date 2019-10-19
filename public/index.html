@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+ 
+  <head>
+    <!-- Se indica que la codificación es UTF-8. Ver http://unicode.org/ -->
+    <meta charset="UTF-8">
+ 
+    <!-- Texto que se muestra en el título de la ventana o en la pestaña
+    del navegador.-->
+    <title>Multiplicación</title>
+ 
+     <link rel="icon" sizes="32x32" href="favicon.ico">
+
+   <!-- Color de la barra de navegación de Chrome. -->
+   <meta name="theme-color" content="#ffcb2d">
+
+   <!-- Configuración de la Web App Chrome y Microsoft Store. -->
+   <link rel="manifest" href="manifest.json">
+
+   <!-- Configuración para del acceso directo en Windows Edge/IE -->
+   <!-- Icono -->
+   <meta name="msapplication-TileImage" content="img/firebase.png">
+   <!-- Color de tile. -->
+   <meta name="msapplication-TileColor" content="#4fc3f7">
+
+   <!-- Configuración para Web Clip en Safari. -->
+   <meta name="mobile-web-app-capable" content="yes">
+   <link rel="apple-touch-icon" sizes="1024x1024" href="img/firebase.png">
+   <link rel="apple-touch-startup-image" sizes="1024x1024"
+     href="img/firebase.png">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="css/estilos.css">
+
+   <!-- update the version number as needed -->
+   <script defer src="/__/firebase/6.0.2/firebase-app.js"></script>
+   <!-- include only the Firebase features as you need -->
+   <script defer src="/__/firebase/6.0.2/firebase-auth.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-firestore.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-messaging.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-storage.js"></script>
+   <!-- initialize the SDK after all desired features are loaded -->
+   <script defer src="/__/firebase/init.js"></script>
+
+ 
+    <!-- Hoja de estilo, que permite cambiar la apariencia de la página. -->
+    <style>
+      body {
+        font-family: sans-serif;
+		margin-left:20%;
+		margin-right:20%;
+		color:blue;
+      }
+	  footer{
+		position:absolute;
+		margin-top:30%;
+	  }
+	  
+    </style>
+  </head>
+  <body>
+    <form id="vista">
+      <!-- Encabezado de la página. -->
+      <h1>Multiplicación</h1> 
+      <p>
+        <!-- La etiqueta output se usa para mostrar los resultados generados por
+        la página.
+      
+        id="respuesta" 
+        nombre del campo de salida, dentro de este documento.-->
+        <output id="respuesta"></output>
+      </p>
+      <p>
+        <input type="number" id="numero1" required placeholder="Primer número">
+      </p>
+	  <p>
+        <input type="number" id="numero2" required placeholder="Segundo número">
+      </p>
+      <p>
+        <button type="submit">Multiplicar</button>
+      </p>
+      <footer>Copyright &copy; 2019 Juan Carlos Sosa Corona IC51</footer>
+    </form>
+    <!-- Incorpora el script controlador a la página. -->
+    <script>
+      vista.addEventListener("submit", multiplica);
+      /** Muestra un saludo.
+       * @param {Event} evt objeto que describe el evento. */
+      function multiplica(evt) {
+        evt.preventDefault();
+        respuesta.value = `La multiplicación del número ${numero1.value} y el número ${numero2.value}  es igual a ${numero1.value * numero2.value} .`;
+      }
+	  
+	  
+     /* Registra un service worker para instalar la aplicación en el
+      * caché del navegador. */
+     async function registraServiceWorker() {
+       if ("serviceWorker" in navigator) {
+         try {
+           const registro = await navigator.serviceWorker.register("sw.js");
+           console.log("Service Worker registrado.");
+           console.log(registro);
+         } catch (e) {
+           console.log(e);
+         }
+       }
+     }
+	 registraServiceWorker();
+	 document.addEventListener('DOMContentLoaded', function () {
+       try {
+         let app = firebase.app();
+         let features = ['auth', 'database', 'messaging', 'storage']
+           .filter(feature => typeof app[feature] === 'function');
+       } catch (e) {
+         console.log(e);
+       }
+     });
+
+   </script>
+  </body>
+</html>
